@@ -34,7 +34,7 @@ def run():
     learning_rate = 0.0001
     initial_b = 0 # initial y-intercept guess
     initial_w = 0 # initial slope guess
-    num_iterations = 100000
+    num_iterations = 1000
 
     init_erro = compute_error_for_line_given_points(initial_b, initial_w, points)
     print("Starting gradient descent at b = {}, m = {}, error = {}".format(initial_b, initial_w,init_erro))
