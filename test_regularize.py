@@ -7,17 +7,6 @@ class MLP(torch.nn.Module):
     def __init__(self):
         super(MLP, self).__init__()
 
-        # self.model = torch.nn.Sequential(
-        #     torch.nn.Linear(784,200),
-        #     torch.nn.ReLU(inplace=True),
-        #
-        #     torch.nn.Linear(200, 200),
-        #     torch.nn.ReLU(inplace=True),
-        #
-        #     torch.nn.Linear(200, 10),
-        #     torch.nn.ReLU(inplace=True),
-        # )
-
         self.model = torch.nn.Sequential(
             torch.nn.Linear(784,200),
             torch.nn.LeakyReLU(inplace=True),
@@ -33,7 +22,6 @@ class MLP(torch.nn.Module):
         x = self.model(x)
         return x
 
-
 class MyFullConnectTest(object):
 
     def __init__(self,batch_size = 200,learning_rate = 0.01,epochs = 2,net=None):
@@ -41,9 +29,20 @@ class MyFullConnectTest(object):
         self.learning_rate = learning_rate
         self.epochs = epochs
         self.net = net
-        self.optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate)
+        self.optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate,weight_decay=0.01)
         self.criteon = torch.nn.CrossEntropyLoss()
         self.init_data()
+
+    def l1_regularization(self,logits,target,weight_decay):
+        reg_loss = 0
+        for param in self.net.parameters():
+            reg_loss += torch.sum(torch.abs(param))
+        classify_loss = self.criteon(logits,target)
+        loss = classify_loss + weight_decay * reg_loss
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
 
     def init_data(self):
         self.train_loader = torch.utils.data.DataLoader(
