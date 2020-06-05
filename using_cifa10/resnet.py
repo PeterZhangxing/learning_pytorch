@@ -78,4 +78,4 @@ if __name__ == '__main__':
     net = ResNet18()
     x = torch.randn(3,3,32,32)
     res = net(x)
-    print(res.shape)
+    print(res.shape) # torch.Size([3, 10])
