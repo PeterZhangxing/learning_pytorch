@@ -2,6 +2,7 @@ import torch
 from torchvision import datasets,transforms
 
 from lenet5 import LeNet5
+from resnet import ResNet18
 
 
 class MyModuleTest(object):
@@ -47,12 +48,13 @@ class MyModuleTest(object):
         return None
 
     def optimize_by_grad(self):
+        print('start practicing!')
         for epoch in range(self.epochs):
 
             self.net.train()
             train_loss = 0
             train_correct = 0
-            for data,target in self.train_loader:
+            for batch_idx,(data,target) in enumerate(self.train_loader):
 
                 logits = self.net(data)
                 loss = self.criteon(logits, target)
@@ -65,14 +67,14 @@ class MyModuleTest(object):
                 loss.backward()
                 self.optimizer.step()
 
-                # if batch_idx % 100 == 0:
-                #     print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                #         epoch, batch_idx * len(data), len(self.train_loader.dataset),
-                #                100. * batch_idx / len(self.train_loader), loss.item()))
+                if batch_idx % 100 == 0:
+                    print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                        epoch, batch_idx * len(data), len(self.train_loader.dataset),
+                               100. * batch_idx / len(self.train_loader), loss.item()))
 
             train_loss /= len(self.train_loader.dataset)
-            print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-                train_loss, train_correct, len(self.train_loader.dataset),
+            print('\nTrain set:{} Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+                epoch,train_loss, train_correct, len(self.train_loader.dataset),
                 100. * train_correct / len(self.train_loader.dataset)))
 
             self.net.eval()
@@ -88,8 +90,8 @@ class MyModuleTest(object):
                     correct += pred.eq(target.data).sum()
 
                 test_loss /= len(self.test_loader.dataset)
-                print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-                    test_loss, correct, len(self.test_loader.dataset),
+                print('\nTest set:{} Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+                    epoch,test_loss, correct, len(self.test_loader.dataset),
                     100. * correct / len(self.test_loader.dataset)))
 
         return None
@@ -117,6 +119,7 @@ class MyModuleTest(object):
 
 
 if __name__ == '__main__':
-    net = LeNet5()
-    obj = MyModuleTest(net=net)
+    # net = LeNet5()
+    net = ResNet18()
+    obj = MyModuleTest(epochs=5,net=net)
     obj.optimize_by_grad()
