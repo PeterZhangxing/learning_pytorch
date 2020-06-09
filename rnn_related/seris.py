@@ -71,7 +71,7 @@ class MySeris(object):
     def optimize_by_grad(self):
         hidden_prev = torch.zeros(1, 1, net.hidden_size)
         output = None
-        for iter in range(1000):
+        for iter in range(6000):
             x,y,time_steps = self.init_data()
             output, hidden_prev = self.net(x, hidden_prev)
             hidden_prev = hidden_prev.detach()
@@ -100,7 +100,7 @@ class MySeris(object):
         for _ in range(x.shape[1]):
             input = input.view(1, 1, 1)
             pred, hidden_prev = self.net(input, hidden_prev)
-            print(input, pred)
+            # print(input, pred)
             input = pred
             predictions.append(pred.detach().numpy().ravel()[0])
 
@@ -128,5 +128,5 @@ if __name__ == '__main__':
 
     obj = MySeris(net=net)
     # obj.optimize_by_grad()
-    obj.pred_op()
-    # obj.build_plt()
+    # obj.pred_op()
+    obj.build_plt()
