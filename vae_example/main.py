@@ -25,8 +25,8 @@ def main():
     print('x:', x.shape)
 
     # device = torch.device('cuda')
-    model = AE()
-    # model = VAE().to(device)
+    # model = AE()
+    model = VAE()
     criteon = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     print(model)
