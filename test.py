@@ -6,9 +6,8 @@ import torch
 # tensor = torch.tensor(res)
 # print(tensor)
 #
-tensor2 = torch.FloatTensor(3,4)
+# tensor2 = torch.FloatTensor(3,4)
 # print(tensor2)
-tensor2.kthvalue()
 
 # x = torch.tensor(1.0)
 # a = torch.tensor(1.,requires_grad=True)
@@ -23,3 +22,6 @@ tensor2.kthvalue()
 
 # print(torch.__version__)
 # print(torch.cuda.is_available())
+
+out = torch.pow(torch.tensor([2.]),3)
+print(out)
