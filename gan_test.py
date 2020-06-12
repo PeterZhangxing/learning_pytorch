@@ -78,7 +78,7 @@ class TrainAndTest(object):
                 point[1] += center[1]
                 dataset.append(point)
 
-            dataset = np.array(dataset).astype(np.float64)
+            dataset = np.array(dataset).astype(np.float32)
             dataset /= 1.414
 
             yield dataset
@@ -92,6 +92,7 @@ class TrainAndTest(object):
         points[:, :, 0] = np.linspace(-RANGE, RANGE, N_POINTS)[:, None]
         points[:, :, 1] = np.linspace(-RANGE, RANGE, N_POINTS)[None, :]
         points = points.reshape((-1, 2))
+        points = torch.tensor(points)
 
         with torch.no_grad():
             disc_map = D(points).cpu().numpy()  # [16384]
@@ -125,7 +126,7 @@ class TrainAndTest(object):
         alpha = torch.rand(self.batch_size, 1)
         alpha = alpha.expand_as(xr)
 
-        interpolates = alpha * xr + ((1 - alpha) * xf)
+        interpolates = alpha * xr + (1 - alpha) * xf
         interpolates.requires_grad_()
 
         disc_interpolates = D(interpolates)
