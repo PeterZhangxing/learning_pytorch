@@ -47,20 +47,35 @@ import torch
 # expanded2 = out.expand_as(x)
 # print(expanded2)
 
-# x = torch.tensor([4.,6.]).requires_grad_()
-x = torch.tensor([4.]).requires_grad_()
-y = x ** 2
-x_grad = torch.autograd.grad(
-    outputs=y,inputs=x,
-    grad_outputs=torch.ones_like(x),
-    create_graph=True,
-    retain_graph=True,
-    only_inputs=True
-)
-print(x_grad)
-# (tensor([ 8., 12.], grad_fn=<MulBackward0>)
+# # x = torch.tensor([4.,6.]).requires_grad_()
+# x = torch.tensor([4.]).requires_grad_()
+# y = x ** 2
+# x_grad = torch.autograd.grad(
+#     outputs=y,inputs=x,
+#     grad_outputs=torch.ones_like(x),
+#     create_graph=True,
+#     retain_graph=True,
+#     only_inputs=True
+# )
+# print(x_grad)
+# # (tensor([ 8., 12.], grad_fn=<MulBackward0>)
+#
+# # y.backward(torch.ones_like(x))
+# y.backward()
+# print(x.grad)
+# # tensor([ 8., 12.])
 
-# y.backward(torch.ones_like(x))
-y.backward()
-print(x.grad)
-# tensor([ 8., 12.])
+import os,glob
+
+# print(os.listdir('./data'))
+# print(os.path.join('root','zx','*.png'))
+# image = []
+# image += [10]
+# image += glob.glob(os.path.join('root','zx','*.png'))
+# print(image)
+
+images = []
+images += glob.glob(os.path.join('./', '*.py'))
+images += glob.glob(os.path.join('./', '*.md'))
+
+print(images)
