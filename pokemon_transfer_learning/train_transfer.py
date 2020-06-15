@@ -46,7 +46,7 @@ class TrainAndTest(object):
                     pred_poke_li.extend(pred_poke_names)
                     self.viz.images(self.train_db.denormalize(x), nrow=1, win='batch', opts=dict(title='batch'))
                     self.viz.text(*pred_poke_names, win='label', opts=dict(title='batch-y'))
-                    time.sleep(7)
+                    time.sleep(2)
             correct += torch.eq(pred,y).sum().float().item()
 
         return correct / total * 100.,pred_poke_li
