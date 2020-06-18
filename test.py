@@ -65,7 +65,7 @@ import torch
 # print(x.grad)
 # # tensor([ 8., 12.])
 
-import os,glob
+# import os,glob
 
 # print(os.listdir('./data'))
 # print(os.path.join('root','zx','*.png'))
@@ -74,8 +74,31 @@ import os,glob
 # image += glob.glob(os.path.join('root','zx','*.png'))
 # print(image)
 
-images = []
-images += glob.glob(os.path.join('./', '*.py'))
-images += glob.glob(os.path.join('./', '*.md'))
+# images = []
+# images += glob.glob(os.path.join('./', '*.py'))
+# images += glob.glob(os.path.join('./', '*.md'))
+#
+# print(images)
 
-print(images)
+import numpy as np
+from matplotlib import pyplot as plt
+
+# img_path = 'start_deeplearning_code/dataset/lena.png'
+# # img = imread(img_path)
+# img = plt.imread(img_path)
+# plt.imshow(img)
+# plt.show()
+
+x = np.arange(0,6,0.1)
+y1 = np.sin(x)
+y2 = np.cos(x)
+
+plt.plot(x,y1,label='sin')
+plt.plot(x,y2,linestyle='--',label='cos')
+
+plt.xticks(ticks=x[::2],rotation=90)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('sin & cos')
+plt.legend()
+plt.show()
